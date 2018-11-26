@@ -1,0 +1,15 @@
+# npm stuff
+npm-debug.log
+*node_modules
+static/dist
+
+# idea junk
+*.iml
+.idea
+
+# don't commit the sqllite db file itself
+*.db
+
+# flask stuff
+__pycache__
+

@@ -1,4 +1,5 @@
 # Imports
+import json
 
 from flask import render_template, request
 from flask_migrate import Migrate
@@ -10,24 +11,39 @@ from commands import *
 
 migrate = Migrate(app, db)
 
-
-
-# @app.route('/', methods=['POST', 'GET'])
-# def home():
-# 	if request.method=='POST':
-#    		username = request.form['username']
-#    		password = request.form['password']
-#    		dbHandler.insertUser(username, password)
-#    		users = dbHandler.retrieveUsers()
-# 		return render_template('login.html', users=users)
-#    	else:
-#    		return render_template('login.html')
-
+LOGGED_IN_USER_EMAIL = "chauhan.shree@gmail.com"
+LOGGED_IN_USER_NAME = "Rajshree"
 
 @app.route("/Index")
 def index():
-    return render_template("index.html")
+    # for successful login from okta/google
+    successful_login = "Yes"
+    if successful_login == "Yes":
+        # check if user details exist in our db
+        userdetails = getuserdetails(LOGGED_IN_USER_EMAIL, LOGGED_IN_USER_NAME)
+        return render_template("index.html", text="successful")
+    else:
+        userdetails = ''
+        return render_template("index.html", text="unauthorized")
 
+
+def getuserdetails(email, name):
+    user = User.query.filter_by(email=email).first()
+    if user is None:
+        newuser = addnewuser(email, name)
+        return newuser
+    else:
+        return user
+
+
+def addnewuser(email, name):
+    return "true"
+
+
+@app.route("/helloworld")
+def helloworld():
+    data = {"user": "Rajshree"}
+    return json.dumps(data), 200, {"Content-Type": "application/json"}
 
 
 if __name__ == "__main__":

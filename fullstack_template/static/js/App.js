@@ -10,10 +10,10 @@ export default class App extends React.Component {
             <div>
                       <h1>RJEMS Enterprise</h1>
                       <ul className="header">
-                        <li><span class="glyphicon glyphicon-user"></span><NavLink to="/Profile">Profile</NavLink></li>
-                        <li><span class="glyphicon glyphicon-dashboard"></span><NavLink to="/Dashboard">Dashboard</NavLink></li>
-                        <li><span class="glyphicon glyphicon-search"></span><a href="/Search">Search</a></li>
-                        <li><span class="glyphicon glyphicon-upload"></span><a href="/Upload">Upload</a></li>
+                        <li><span className="glyphicon glyphicon-user"></span><NavLink to="/Profile">Profile</NavLink></li>
+                        <li><span className="glyphicon glyphicon-dashboard"></span><NavLink to="/Dashboard">Dashboard</NavLink></li>
+                        <li><span className="glyphicon glyphicon-search"></span><a href="/Search">Search</a></li>
+                        <li><span className="glyphicon glyphicon-upload"></span><a href="/Upload">Upload</a></li>
                       </ul>
             <div className="content">
             <Route path="/Profile" component={Profile}/>

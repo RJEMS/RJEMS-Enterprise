@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+<form id="profile" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="input_name">Name: </label>
+            <input type="text" readonly class="form-control" id="input_name" value="{{ user.first_name }} {{ user.last_name }}!">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="input_email">Email: </label>
+            <input type="text" readonly class="form-control" id="input_email" value="{{ user.email }}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="input_phone">Phone: </label>
+            <input type="text" class="form-control" id="input_phone" value="{{ user.phone }}">
+        </div>
+    </div>
+    <div>
+        <div class="form-group col-md-12">
+            <label for="input_bio">Bio: </label>
+            <input type="text" class="form-control" id="input_bio" value="{{ user.email }}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-info btn-lg" onclick="Validation()"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</button>
+        </div>
+    </div>
+
+
+</form>
+
+{% endblock %}

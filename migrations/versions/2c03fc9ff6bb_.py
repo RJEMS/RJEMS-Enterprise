@@ -1,8 +1,8 @@
-"""Created users and roles tables
+"""empty message
 
-Revision ID: 7a8a49a012cc
+Revision ID: 2c03fc9ff6bb
 Revises: 
-Create Date: 2018-11-26 00:47:28.201004
+Create Date: 2018-11-29 17:59:49.271951
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7a8a49a012cc'
+revision = '2c03fc9ff6bb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,9 +25,11 @@ def upgrade():
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=True),
+    sa.Column('first_name', sa.String(length=255), nullable=True),
+    sa.Column('last_name', sa.String(length=255), nullable=True),
     sa.Column('email', sa.String(length=255), nullable=True),
     sa.Column('phone', sa.Integer(), nullable=True),
+    sa.Column('bio', sa.String(length=255), nullable=True),
     sa.Column('role_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
     sa.PrimaryKeyConstraint('id')

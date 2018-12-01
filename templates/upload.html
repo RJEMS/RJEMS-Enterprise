@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Upload{% endblock %}
+
+
+{% block body %}
+
+    <form>
+
+        <div class="form-group">
+            <select id="selectuploadtype" class="form-control">
+                <option selected>Select Upload Type..</option>
+                <option>Pdf</option>
+                <option>Image</option>
+                <option>Text</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <p class="form-control"><input type=file  name=file >
+        </div>
+
+        <div class="form-group">
+            <textarea class="form-control"></textarea>
+        </div>
+
+        <!--<div class="input-group">-->
+            <!--<div class="input-group-prepend">-->
+                <!--<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>-->
+            <!--</div>-->
+            <!--<div class="custom-file">-->
+                <!--<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">-->
+                <!--<label class="custom-file-label" for="inputGroupFile01">Choose file</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <button type="submit" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+    </form>
+
+{% endblock %}

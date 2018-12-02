@@ -12,8 +12,8 @@ from utils import *
 
 migrate = Migrate(app, db)
 
-LOGGED_IN_USER_EMAIL = "chauhan.shree@gmail.com"
-LOGGED_IN_USER_NAME = "Rajshree"
+#LOGGED_IN_USER_EMAIL = "chauhan.shree@gmail.com"
+#LOGGED_IN_USER_NAME = "Rajshree"
 
 
 app.config["OIDC_CLIENT_SECRETS"] = "client_secrets.json"
@@ -61,8 +61,8 @@ def dashboard():
 @oidc.require_login
 def search():
     if request.method == 'POST':
-        first_name = request.form['inputFirstName']
-        last_name = request.form['inputLastName']
+        first_name = request.form['input_first_name']
+        last_name = request.form['input_last_name']
         users = get_users_by_filter(first_name, last_name)
         return render_template("search.html", users=users)
     users = get_all_users()
@@ -103,4 +103,4 @@ def uploaded_file(filename):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=80)

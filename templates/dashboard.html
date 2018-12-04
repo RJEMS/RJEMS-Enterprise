@@ -12,7 +12,7 @@
         <table class="table">
             <tbody>
                 {% for item in uploads %}
-                    {% if item.upload_type == "Pdf" %}
+                    {% if item.upload_type == "pdf" %}
                         <h3><a target="_blank" href="{{ item.url }}"> {{ item.title }}</a></h3><br/>
                     {% endif %}
                 {% endfor %}
@@ -27,13 +27,11 @@
         <br/>
         {% set count = 1 %}
         {% for item in uploads %}
-            {% if item.upload_type == "Image" %}
+            {% if item.upload_type == "jpg" %}
                 <img src={{ item.url }} alt={{ item.title }} width="200px" height= "200px" class="img-thumbnail" id= {{ count }} >
             {% endif %}
         {% set count = count + 1 %}
         {% endfor %}
-        <!--<img src="/static/images/cat.jpg" alt="Related Book 1" width="40%" height="40%" class="myImg">-->
-        <!--<img src="/static/images/images.jpg" alt="Related Book 2" width="40%" height="40%" class="myImg">-->
 
         <div id="myModal" class="modal">
             <span class="close">×</span>
@@ -50,7 +48,7 @@
             <tbody>
 
                 {% for item in uploads %}
-                    {% if item.upload_type == "Text" %}
+                    {% if item.upload_type == "text" %}
                         <tr><td > <h3>{{ item.text }}</h3></td></tr>
                     {% endif %}
                 {% endfor %}

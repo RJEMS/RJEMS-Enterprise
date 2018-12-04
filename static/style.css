@@ -204,3 +204,11 @@ a{
     background: #238899;
     box-shadow: none;
 }
+
+.error{
+    color:red
+    }
+
+.success{
+    color:green
+    }

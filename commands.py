@@ -11,7 +11,7 @@ def initdatabase():
     Creates an admin role and admin user."""
     # create_role()
     # create_admin_user()
-    # create_uploads()
+   # create_uploads()
 
 
 # def create_admin_user():

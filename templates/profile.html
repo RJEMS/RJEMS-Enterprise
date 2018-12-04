@@ -5,34 +5,66 @@
 
 <form id="profile" method="post">
     <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-4">
             <label for="input_name">Name: </label>
-            <input type="text" readonly class="form-control" id="input_name" value="{{ user.first_name }} {{ user.last_name }}!">
+            <input type="text" readonly class="form-control"  id ="input_name" name="input_name" value="{{ user.first_name }} {{ user.last_name }}">
         </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
             <label for="input_email">Email: </label>
-            <input type="text" readonly class="form-control" id="input_email" value="{{ user.email }}">
+            <input type="text" readonly class="form-control" id="input_email" name="input_email" value="{{ user.email }}">
         </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <label for="input_phone">Phone: </label>
-            <input type="text" class="form-control" id="input_phone" value="{{ user.phone }}">
-        </div>
-    </div>
-    <div>
-        <div class="form-group col-md-12">
-            <label for="input_bio">Bio: </label>
-            <input type="text" class="form-control" id="input_bio" value="{{ user.email }}">
+        <div class="form-group col-md-2">
+            <h3><a id="input_payslip" target="_blank" href="/payslip?email={{user.email}}"> View Payslip</a></h3><br/>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <button type="submit" class="btn btn-info btn-lg" onclick="Validation()"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</button>
+            <label for="input_phone">Phone: </label>
+            <input type="text" class="form-control" id="input_phone" name="input_phone" value="{{ user.phone }}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="input_bio">Bio: </label>
+            <input type="text" class="form-control" id="input_bio" name="input_bio" value="{{ user.bio }}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="input_address_line1">Address Line 1: </label>
+            <input type="text" class="form-control" id="input_address_line1" name="input_address_line1" value="{{ user.address_line1 }}">
+        </div>
+    </div>
+    <div>
+        <div class="form-group col-md-12">
+            <label for="input_address_line2">Address Line 2: </label>
+            <input type="text" class="form-control" id="input_address_line2" name="input_address_line2" value="{{ user.address_line2 }}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="input_city">City: </label>
+            <input type="text" class="form-control" id="input_city" name="input_city" value="{{ user.city }}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="input_state">State: </label>
+            <select id="input_state" name="input_state" class="form-control">
+                <option selected>Select State</option>
+
+                {% for states in states %}
+                    <option >{% if states == user.state %}
+                        selected="selected"
+                        {% endif %}{{ states }}</option>
+
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-info btn-lg" ><span class="glyphicon glyphicon-pencil"></span> Edit Profile</button>
         </div>
     </div>
 

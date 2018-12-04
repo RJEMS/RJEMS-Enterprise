@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+$('#div_text').hide();
+$('#div_upload').hide();
+
 
 var coll = document.getElementsByClassName("collapsible");
 
@@ -24,22 +27,111 @@ for (i = 0; i < coll.length; i++) {
   var modalImg = document.getElementById("img01");
   var captionText = document.getElementById("caption");
 
-  img.onclick = function(){
-      modal.style.display = "block";
-      modalImg.src = this.src;
-      captionText.innerHTML = this.alt;
-  }
+//  img.onclick = function(){
+//      modal.style.display = "block";
+//      modalImg.src = this.src;
+//      captionText.innerHTML = this.alt;
+//  }
 
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
 
   // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-      modal.style.display = "none";
-  }
-
+//  span.onclick = function() {
+//      modal.style.display = "none";
+//  }
 
 });
+
+
+// on change function of upload type drop down in upload page
+function on_change() {
+      if($('#input_upload_type :selected').text() == 'Training Material/Images')
+      {
+        $('#invalid_upload_type').hide();
+        $('#div_text').hide();
+        $('#div_upload').show();
+      }
+
+      else if($('#input_upload_type :selected').text() == 'Text')
+      {
+        $('#invalid_upload_type').hide();
+        $('#div_upload').hide();
+        $('#div_text').show();
+      }
+      else
+      {
+        $('#invalid_upload_type').show();
+        $('#div_text').hide();
+        $('#div_upload').hide();
+      }
+
+};
+
+
+// validate function of upload button in upload page
+function validate_upload() {
+
+      if($('#div_text').is(":visible")){
+
+            if($('#input_upload_text').val() == ''){
+                $('#invalid_upload_text').show();
+                $('#invalid_upload_text').text('Text cannot be empty.');
+                return false;
+            }
+            return true;
+
+      }
+      else{
+
+              if($('#input_upload_type :selected').text() == '' || $('#input_upload_type :selected').text() == 'Select Upload Type..')
+              {
+                   $('#invalid_upload_type').show();
+                   return false;
+              }
+
+              if($('#upload_file').val() == '')
+              {
+                   $('#invalid_upload_file').show();
+                   $('#invalid_upload_file').text('Please select a file to upload.');
+                   return false;
+              }
+              else
+              {
+                   var valid_extensions = ['pdf','jpg','gif']; //array of valid extensions
+                   //var file_name = $('#upload_file').val().split('\\').pop();
+                   var file_Ext = $('#upload_file').val().split('.').pop();
+                   if(valid_extensions.indexOf(file_Ext) > -1)
+                   {
+                       $('#invalid_upload_file').hide();
+                   }
+                   else
+                   {
+                       $('#invalid_upload_file').show();
+                       $('#invalid_upload_file').text('Allowed extensions: pdf, png, jpg, jpeg, gif');
+                       return false;
+                   }
+
+              }
+              return true;
+      }
+};
+
+
+function myFunction(x) {
+
+  var email = $(x).closest('tr').find('.c4').text();
+     $.ajax({
+     type: "POST",
+     url: "/assign_manager_role",
+     data: email
+  }).done(function( response ) {
+      location.reload();
+      alert("Manager role assigned!");
+
+  });
+
+};
 
 
 

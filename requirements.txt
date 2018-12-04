@@ -5,6 +5,7 @@ Click==7.0
 Flask==1.0.2
 Flask-Migrate==2.3.0
 flask-oidc==1.4.0
+Flask-Session==0.3.1
 Flask-SQLAlchemy==2.3.2
 httplib2==0.12.0
 idna==2.7

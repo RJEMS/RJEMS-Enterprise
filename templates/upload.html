@@ -5,35 +5,31 @@
 
 {% block body %}
 
-    <form>
+
+    <form method="POST" enctype=multipart/form-data>
+        {% if success != null %}
+        <p class="success">File was uploaded successfully.</p>
+        {% endif %}
 
         <div class="form-group">
-            <select id="selectuploadtype" class="form-control">
+            <select id="input_upload_type" class="form-control is-valid" onchange="on_change()"  class="custom-select" required>
                 <option selected>Select Upload Type..</option>
-                <option>Pdf</option>
-                <option>Image</option>
+                <option>Training Material/Images</option>
                 <option>Text</option>
             </select>
+            <div id="invalid_upload_type" class="error" style="display:none">Please select an upload type.</div>
         </div>
-        <div class="form-group">
-            <p class="form-control"><input type=file  name=file >
-        </div>
-
-        <div class="form-group">
-            <textarea class="form-control"></textarea>
+        <div class="form-group" id="div_upload">
+            <p class="form-control"><input id="upload_file" type=file  name=file >
+            <div id="invalid_upload_file" class="error" style="display:none"></div>
         </div>
 
-        <!--<div class="input-group">-->
-            <!--<div class="input-group-prepend">-->
-                <!--<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>-->
-            <!--</div>-->
-            <!--<div class="custom-file">-->
-                <!--<input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">-->
-                <!--<label class="custom-file-label" for="inputGroupFile01">Choose file</label>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="form-group" id="div_text">
+            <textarea class="form-control" name = "input_upload_text" id ="input_upload_text"></textarea>
+            <div id="invalid_upload_text" class="error" style="display:none">Please enter some text.</div>
+        </div>
 
-        <button type="submit" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+        <button type="submit" class="btn btn-info btn-lg" onclick=" return validate_upload()"><span class="glyphicon glyphicon-upload"></span> Upload</button>
     </form>
 
 {% endblock %}

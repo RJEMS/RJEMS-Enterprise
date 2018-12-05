@@ -24,22 +24,24 @@ for (i = 0; i < coll.length; i++) {
   var modal = document.getElementById('myModal');
   // Get the image and insert it inside the modal - use its "alt" text as a caption
   var img = document.getElementById('1');
+  var images = $("img.img-thumbnail")
   var modalImg = document.getElementById("img01");
   var captionText = document.getElementById("caption");
-
-//  img.onclick = function(){
-//      modal.style.display = "block";
-//      modalImg.src = this.src;
-//      captionText.innerHTML = this.alt;
-//  }
+    var setImageCallback = function(elem) {
+        elem.onclick = function() {
+            modal.style.display = "block"
+            modalImg.src = elem.src;
+        }
+  }
+  _.forEach(images, setImageCallback)
 
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
 
-  // When the user clicks on <span> (x), close the modal
-//  span.onclick = function() {
-//      modal.style.display = "none";
-//  }
+  //When the user clicks on <span> (x), close the modal
+ span.onclick = function() {
+     modal.style.display = "none";
+ }
 
 });
 
@@ -98,7 +100,7 @@ function validate_upload() {
               }
               else
               {
-                   var valid_extensions = ['pdf','jpg','gif']; //array of valid extensions
+                  var valid_extensions = ['pdf','jpg','jpeg','gif']; //array of valid extensions
                    //var file_name = $('#upload_file').val().split('\\').pop();
                    var file_Ext = $('#upload_file').val().split('.').pop();
                    if(valid_extensions.indexOf(file_Ext) > -1)
@@ -118,7 +120,7 @@ function validate_upload() {
 };
 
 
-function myFunction(x) {
+function assign_manager_role(x) {
 
   var email = $(x).closest('tr').find('.c4').text();
      $.ajax({
@@ -127,11 +129,8 @@ function myFunction(x) {
      data: email
   }).done(function( response ) {
       location.reload();
-      alert("Manager role assigned!");
+      // $('#input_update_message').show();
 
   });
 
 };
-
-
-

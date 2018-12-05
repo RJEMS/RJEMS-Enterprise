@@ -7,15 +7,18 @@
 
 
     <form method="POST" enctype=multipart/form-data>
-        {% if success != null %}
+        {% if success == "upload_true" %}
         <p class="success">File was uploaded successfully.</p>
+        {% endif %}
+        {% if success == "text_true" %}
+        <p class="success">News/Updates was uploaded successfully.</p>
         {% endif %}
 
         <div class="form-group">
             <select id="input_upload_type" class="form-control is-valid" onchange="on_change()"  class="custom-select" required>
                 <option selected>Select Upload Type..</option>
-                <option>Training Material/Images</option>
-                <option>Text</option>
+                <option>Training Material/Photos</option>
+                <option>News/Updates</option>
             </select>
             <div id="invalid_upload_type" class="error" style="display:none">Please select an upload type.</div>
         </div>

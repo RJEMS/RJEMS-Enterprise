@@ -27,7 +27,7 @@
         <br/>
         {% set count = 1 %}
         {% for item in uploads %}
-            {% if item.upload_type == "jpg" %}
+            {% if item.upload_type == "jpg" or item.upload_type == "jpeg" or item.upload_type =="gif" %}
                 <img src={{ item.url }} alt={{ item.title }} width="200px" height= "200px" class="img-thumbnail" id= {{ count }} >
             {% endif %}
         {% set count = count + 1 %}

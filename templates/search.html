@@ -4,6 +4,7 @@
 
 {% block body %}
 <form id="search" method=post>
+    <p class="success" style="display:none" id="input_update_message">Role was updated successfully.</p>
     <div class="form-row">
         <div class="form-group col-md-5">
             <!--<label for="inputFirstName">First Name</label>-->
@@ -26,7 +27,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
-            <th scope="col">Designation</th>
+            <th scope="col">Role</th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
@@ -39,12 +40,57 @@
             <TD class="c4"><SPAN>{{item.email}}</SPAN></TD>
             <TD class="c5"><SPAN>{{item.phone}}</SPAN></TD>
             <TD class="c5"><SPAN>{{item.role_name}}</SPAN></TD>
-            <TD align="center"><a class="btn btn-info" id="assign_manager_role" onclick="myFunction(this)">Assign Manager Role</a></TD>
-            <TD align="center"><a class="btn btn-info">View Payslip</a></TD>
+            <TD align="center"><a class="btn btn-info" id="assign_manager_role" onclick="assign_manager_role(this)">Assign Manager Role</a></TD>
+            <TD align="center"><a class="btn btn-info" data-toggle="modal" data-target="#myOutput{{ item.id }}">View Payslip</a></TD>
         </TR>
         {% endfor %}
     </table>
+
+    {% for item in users %}
+    <!-- Modal -->
+    <div class="modal fade" id="myOutput{{ item.id }}" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Payslip</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="left-text">
+                        Employee ID : {{ item.id }}
+                        <span class="right-text">Name : {{ item.first_name }} {{ item.last_name }}</span>
+                    </p>
+                    <p>Address : {{ item.address_line1 }}, {{ item.address_line2 }},{{ item.city }}, {{ item.state }}</p>
+                    <p class="left-text">Email : {{item.email}}<span class="right-text">Phone : {{item.phone}}</span></p>
+                    <p>Company : RJEMS</p>
+                    <p>***************************************************************************************************************************</p>
+
+                    <p><b>Basic Salary : {{item.basic_salary}}</b></p>
+                    <p><b>Deductions </b></p>
+                    <p class="indent">Taxation : ${{item.basic_salary * 40/100}}</p>
+                    <p class="indent">Insurance : $150</p>
+                    <p class="indent">Others : $120</p>
+
+                    <p>***************************************************************************************************************************</p>
+
+                    <p class="left-text"><b>
+                        Gross Earnings : ${{ item.basic_salary }}
+                        {% set deductions = item.basic_salary * 40/100 + 150 + 120 %}
+                        <span class="right-text">Total Deductions : ${{deductions}} </span></b>
+                    </p>
+                    <p><b>Net Salary Transferred :  ${{item.basic_salary - deductions}}</b></p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
 </form>
 {% endblock %}
+
 
 

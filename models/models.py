@@ -17,38 +17,25 @@ class User(db.Model):
     address_line2 = db.Column(db.String(255))
     city = db.Column(db.String(255))
     state = db.Column(db.String(255))
+    basic_salary = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    def __init__(self, first_name, last_name, email, phone, bio, address_line1, address_line2, city, state, role_id):
+    def __init__(self, first_name, last_name, email, role_id, basic_salary, phone=None, bio=None, address_line1=None,
+                 address_line2=None, city=None, state=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.role_id = role_id
         self.phone = phone
         self.bio = bio
         self.address_line1 = address_line1
         self.address_line2 = address_line2
         self.city = city
         self.state = state
-        self.role_id = role_id
+        self.basic_salary = basic_salary
 
     def __repr__(self):
         return '<id {}, name {}>'.format(self.id, self.first_name + ' ' + self.last_name)
-
-
-class Salary(db.Model):
-    """
-    TODO : Add documentation
-    """
-    __tablename__ = 'salaries'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __init__(self, user_id):
-        self.user_id = user_id
-
-    def __repr__(self):
-        return '<id {}, user_id {}>'.format(self.id, self.user_id)
 
 
 class Role(db.Model):

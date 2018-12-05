@@ -4,6 +4,9 @@
 {% block body %}
 
 <form id="profile" method="post">
+    {% if success == "true" %}
+    <p class="success">Profile was updated successfully.</p>
+    {% endif %}
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="input_name">Name: </label>
@@ -14,7 +17,7 @@
             <input type="text" readonly class="form-control" id="input_email" name="input_email" value="{{ user.email }}">
         </div>
         <div class="form-group col-md-2">
-            <h3><a id="input_payslip" target="_blank" href="/payslip?email={{user.email}}"> View Payslip</a></h3><br/>
+            <h3><a id="input_payslip" data-toggle="modal" data-target="#myOutput{{ user.id }}"> View Payslip</a></h3><br/>
         </div>
     </div>
 
@@ -50,13 +53,9 @@
         <div class="form-group col-md-6">
             <label for="input_state">State: </label>
             <select id="input_state" name="input_state" class="form-control">
-                <option selected>Select State</option>
-
-                {% for states in states %}
-                    <option >{% if states == user.state %}
-                        selected="selected"
-                        {% endif %}{{ states }}</option>
-
+              <option selected={{user.state}}></option>
+                {% for state in states %}
+                <option value={{state}} {% if user.state == state %} selected {% endif %}>{{ state }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -68,6 +67,46 @@
         </div>
     </div>
 
+    <div class="modal fade" id="myOutput{{ user.id }}" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Payslip</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="left-text">
+                        Employee ID : {{ user.id }}
+                        <span class="right-text">Name : {{ user.first_name }} {{ user.last_name }}</span>
+                    </p>
+                    <p>Address : {{ user.address_line1 }}, {{ user.address_line2 }},{{ user.city }}, {{ user.state }}</p>
+                    <p class="left-text">user : {{user.email}}<span class="right-text">Phone : {{user.phone}}</span></p>
+                    <p>Company : RJEMS</p>
+                    <p>***************************************************************************************************************************</p>
+
+                    <p><b>Basic Salary : {{user.basic_salary}}</b></p>
+                    <p><b>Deductions </b></p>
+                    <p class="indent">Taxation : ${{user.basic_salary * 40/100}}</p>
+                    <p class="indent">Insurance : $150</p>
+                    <p class="indent">Others : $120</p>
+
+                    <p>***************************************************************************************************************************</p>
+
+                    <p class="left-text"><b>
+                        Gross Earnings : ${{ user.basic_salary }}
+                        {% set deductions = user.basic_salary * 40/100 + 150 + 120 %}
+                        <span class="right-text">Total Deductions : ${{deductions}} </span></b>
+                    </p>
+                    <p><b>Net Salary Transferred :  ${{user.basic_salary - deductions}}</b></p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </form>
 

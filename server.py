@@ -65,19 +65,10 @@ def profile():
               "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
     if request.method == 'POST':
         edit_existing_user(request.form)
-        # return render_template("profile.html", user=user_details, states=states)
+        user_details = get_logged_in_user_details(g)
+        return render_template("profile.html", user=user_details, states=states, success='true')
     user_details = get_logged_in_user_details(g)
-    return render_template("profile.html", user=user_details, states=states)
-
-
-@app.route("/payslip")
-@oidc.require_login
-def payslip():
-
-    # data = requests.request("GET", link)
-    # url = data.url
-    email = request.form['email']
-    return render_template("payslip.html", email=email)
+    return render_template("profile.html", user=user_details, states=states, success='false')
 
 
 @app.route("/dashboard")
@@ -109,7 +100,7 @@ def upload():
         if 'file' not in request.files:
             text = request.form['input_upload_text']
             add_new_file('text', '', '', text)
-            return render_template("upload.html")
+            return render_template("upload.html", success='text_true')
         file = request.files['file']
         ext = file.filename.rsplit('.', 1)[1].lower()
         name = file.filename.rsplit('.', 0)[0]
@@ -118,7 +109,8 @@ def upload():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         add_new_file(ext, name, file_path, '')
-        return redirect(url_for('uploaded_file'))
+        return render_template("upload.html", success='upload_true')
+#        return redirect(url_for('uploaded_file'))
     else:
         return render_template("upload.html")
 

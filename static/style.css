@@ -176,9 +176,6 @@ a{
     color: white
 }
 
-
-
-
 .btn {
     padding: 14px 24px;
     border: 0 none;
@@ -212,3 +209,22 @@ a{
 .success{
     color:green
     }
+
+  .modal-header, h4, .close {
+      background-color: #185a66;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+
+  .indent {
+    text-indent: 5%;
+  }
+
+  .left-text{
+        text-align:left;
+  }
+
+  .right-text {
+  float:right;
+  }

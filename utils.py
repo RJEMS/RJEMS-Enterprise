@@ -16,7 +16,7 @@ def get_logged_in_user_details(g):
 
 def add_new_user(g):
     role_id = Role.query.filter_by(role_name="employee").first().id
-    user = User(g.user.profile.firstName, g.user.profile.lastName, g.user.profile.email, '', '', role_id)
+    user = User(g.user.profile.firstName, g.user.profile.lastName, g.user.profile.email, role_id, 200000)
     db.session.add(user)
     db.session.commit()
     user = User.query.filter_by(email=g.user.profile.email).first()
@@ -41,10 +41,6 @@ def change_manager_role(email):
     db.session.commit()
 
 
-def get_payslip_data(email_id):
-    return ""
-
-
 def get_all_users():
     users = User.query.all()
     for user in users:
@@ -53,21 +49,15 @@ def get_all_users():
 
 
 def get_users_by_filter(first_name, last_name):
-    if first_name != "" and last_name != "":
-        users = User.query.filter_by(first_name=first_name, last_name=last_name)
-        # users = User.query.filter(and_(func.lower(User.first_name) == func.lower(first_name),
-        #                               func.lower(User.last_name) == func.lower(last_name))).first()
-
-    if first_name != "" and last_name == "":
-        users = User.query.filter_by(first_name=first_name)
-    if first_name == "" and last_name != "":
-        users = User.query.filter_by(last_name=last_name)
-    if first_name == "" and last_name == "":
-        users = User.query.all()
+    searchQuery = User.query
+    if first_name:
+        searchQuery = searchQuery.filter(User.first_name.like('%{0}%'.format(first_name)))
+    if last_name:
+        searchQuery = searchQuery.filter(User.last_name.like('%{0}%'.format(last_name)))
+    users = searchQuery.all()
 
     for user in users:
         user.role_name = Role.query.filter_by(id=user.role_id).first().role_name
-        print(user.role_name)
     return users
 
 

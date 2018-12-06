@@ -21,7 +21,7 @@ app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
 app.config["SECRET_KEY"] = "yfrhkjdvknkjxhvbxhjfdgkdfjgk"
 oidc = OpenIDConnect(app)
 
-okta_client = UsersClient("https://dev-367258.oktapreview.com", "00sm6OGGNmcRbM85ZxKMTbTVeBcojH_ei8HFF0HUfk")
+okta_client = UsersClient("https://dev-664783.oktapreview.com", "00pIz5wsJSahcbI1dp-czYIeocQdBw2ffUIYMjE7lP")
 
 UPLOAD_FOLDER = './static/uploads'
 RETRIEVE_FOLDER = '/static/uploads'

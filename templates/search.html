@@ -28,21 +28,35 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">Role</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            {% if session['role_name'] == 'admin'%}
+                <th scope="col"></th>
+            {% endif %}
+            {% if session['role_name'] == 'admin' or session['role_name'] == 'manager' %}
+                <th scope="col"></th>
+            {% endif %}
         </tr>
         </thead>
         {% for item in users %}
-        <TR>
-            <TD class="c1">{{item.id}}</TD>
-            <TD class="c2">{{item.first_name}}</TD>
-            <TD class="c3">{{item.last_name}}</TD>
-            <TD class="c4"><SPAN>{{item.email}}</SPAN></TD>
-            <TD class="c5"><SPAN>{{item.phone}}</SPAN></TD>
-            <TD class="c5"><SPAN>{{item.role_name}}</SPAN></TD>
-            <TD align="center"><a class="btn btn-info" id="assign_manager_role" onclick="assign_manager_role(this)">Assign Manager Role</a></TD>
-            <TD align="center"><a class="btn btn-info" data-toggle="modal" data-target="#myOutput{{ item.id }}">View Payslip</a></TD>
-        </TR>
+            <TR>
+                <TD class="c1">{{item.id}}</TD>
+                <TD class="c2">{{item.first_name}}</TD>
+                <TD class="c3">{{item.last_name}}</TD>
+                <TD class="c4"><SPAN>{{item.email}}</SPAN></TD>
+                <TD class="c5"><SPAN>{{item.phone}}</SPAN></TD>
+                <TD class="c5"><SPAN>{{item.role_name}}</SPAN></TD>
+                {% if session['role_name'] == 'admin'%}
+                    <TD align="center">
+                        {% if item.role_name =="manager" or item.role_name =="admin"%}
+                            <a class="btn btn-info" name="assign_manager_role" onclick="assign_manager_role(this)" disabled>Assign Manager Role</a>
+                        {% else %}
+                            <a class="btn btn-info" name="assign_manager_role" onclick="assign_manager_role(this)">Assign Manager Role</a>{%endif%}
+                    </TD>
+                {% endif %}
+
+                {% if session['role_name'] == 'admin' or session['role_name'] == 'manager' %}
+                    <TD align="center"> <a class="btn btn-info" data-toggle="modal" data-target="#myOutput{{ item.id }}">View Payslip</a></TD>
+                {% endif %}
+            </TR>
         {% endfor %}
     </table>
 

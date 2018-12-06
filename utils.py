@@ -5,15 +5,23 @@ from sqlalchemy import desc
 from sqlalchemy import func, and_
 
 
-def get_logged_in_user_details(g):
+# get logged in user role
+def get_logged_in_user_role(g):
     user = User.query.filter_by(email=g.user.profile.email).first()
     if user is None:
-        new_user = add_new_user(g)
-        return new_user
-    else:
-        return user
+        user = add_new_user(g)
+
+    role_name = Role.query.filter_by(id=user.role_id).first().role_name
+    return role_name
 
 
+# get details of logged in user.
+def get_logged_in_user_details(g):
+    user = User.query.filter_by(email=g.user.profile.email).first()
+    return user
+
+
+# add a user to rjems db when user logs in first time.
 def add_new_user(g):
     role_id = Role.query.filter_by(role_name="employee").first().id
     user = User(g.user.profile.firstName, g.user.profile.lastName, g.user.profile.email, role_id, 200000)
@@ -23,6 +31,7 @@ def add_new_user(g):
     return user
 
 
+# edit details of an existing user.
 def edit_existing_user(form_data):
     user = User.query.filter_by(email=form_data['input_email']).first()
     user.phone = form_data['input_phone']
@@ -34,6 +43,7 @@ def edit_existing_user(form_data):
     db.session.commit()
 
 
+# change role of an employee to manager.
 def change_manager_role(email):
     role_id = Role.query.filter_by(role_name="manager").first().id
     user = User.query.filter_by(email=email).first()
@@ -41,6 +51,7 @@ def change_manager_role(email):
     db.session.commit()
 
 
+# get all the users registered with the application.
 def get_all_users():
     users = User.query.all()
     for user in users:
@@ -48,24 +59,27 @@ def get_all_users():
     return users
 
 
+# get users based on given filter.
 def get_users_by_filter(first_name, last_name):
-    searchQuery = User.query
+    search_query = User.query
     if first_name:
-        searchQuery = searchQuery.filter(User.first_name.like('%{0}%'.format(first_name)))
+        search_query = search_query.filter(User.first_name.like('%{0}%'.format(first_name)))
     if last_name:
-        searchQuery = searchQuery.filter(User.last_name.like('%{0}%'.format(last_name)))
-    users = searchQuery.all()
+        search_query = search_query.filter(User.last_name.like('%{0}%'.format(last_name)))
+    users = search_query.all()
 
     for user in users:
         user.role_name = Role.query.filter_by(id=user.role_id).first().role_name
     return users
 
 
+# get all the images, training materials and text updates uploaded to the database.
 def get_uploaded_files():
     uploaded_files = Upload.query.order_by(desc(Upload.id))
     return uploaded_files
 
 
+# add a new image, training material or text update to database
 def add_new_file(ext, name, file_path, text):
     upload = Upload(ext, file_path, name, text, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     db.session.add(upload)

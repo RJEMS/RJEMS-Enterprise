@@ -1,16 +1,14 @@
 # Imports
 
-from flask import render_template, request, g, redirect, url_for
+from flask import render_template, request, g, redirect, url_for, session
 from flask_migrate import Migrate
 from flask_oidc import OpenIDConnect
 from okta import UsersClient
 import os
 from werkzeug.utils import secure_filename
-from flask import send_from_directory
 from models.models import *
 from commands import *
 from utils import *
-import json
 
 
 migrate = Migrate(app, db)
@@ -29,11 +27,11 @@ UPLOAD_FOLDER = './static/uploads'
 RETRIEVE_FOLDER = '/static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 @app.before_request
 def before_request():
     if oidc.user_loggedin:
         g.user = okta_client.get_user(oidc.user_getfield("sub"))
+        session['role_name'] = get_logged_in_user_role(g)
     else:
         g.user = None
 
@@ -55,6 +53,7 @@ def index():
     return render_template('index.html')
 
 
+# renders the profile page if the user is logged in.
 @app.route("/profile", methods=['GET', 'POST'])
 @oidc.require_login
 def profile():
@@ -71,6 +70,7 @@ def profile():
     return render_template("profile.html", user=user_details, states=states, success='false')
 
 
+# renders the dashboard page if the user is logged in.
 @app.route("/dashboard")
 @oidc.require_login
 def dashboard():
@@ -78,6 +78,8 @@ def dashboard():
     return render_template("dashboard.html", uploads=uploaded_files)
 
 
+# renders the search page if the user is logged in.
+# handles search functionality in post method
 @app.route("/search", methods=['GET', 'POST'])
 @oidc.require_login
 def search():
@@ -85,17 +87,18 @@ def search():
         first_name = request.form['input_first_name']
         last_name = request.form['input_last_name']
         users = get_users_by_filter(first_name, last_name)
-
-        # print("test", users[0].role_name)
         return render_template("search.html", users=users)
     users = get_all_users()
-    print("test", users[0].role_name)
     return render_template("search.html", users=users)
 
 
+# renders the upload page if the user is logged in.
+# handles upload functionality in post method
 @app.route("/upload", methods=['GET', 'POST'])
 @oidc.require_login
 def upload():
+    if session['role_name'] != 'admin':
+        return render_template("error.html")
     if request.method == 'POST':
         if 'file' not in request.files:
             text = request.form['input_upload_text']
@@ -110,16 +113,11 @@ def upload():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         add_new_file(ext, name, file_path, '')
         return render_template("upload.html", success='upload_true')
-#        return redirect(url_for('uploaded_file'))
     else:
         return render_template("upload.html")
 
 
-@app.route('/upload')
-def uploaded_file():
-    return render_template("upload.html", success="true")
-
-
+# change role of an employee to manager
 @app.route('/assign_manager_role', methods=['POST'])
 @oidc.require_login
 def assign_manager_role():

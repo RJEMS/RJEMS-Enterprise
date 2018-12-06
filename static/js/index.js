@@ -48,14 +48,14 @@ for (i = 0; i < coll.length; i++) {
 
 // on change function of upload type drop down in upload page
 function on_change() {
-      if($('#input_upload_type :selected').text() == 'Training Material/Images')
+      if($('#input_upload_type :selected').text() == 'Training Material/Photos')
       {
         $('#invalid_upload_type').hide();
         $('#div_text').hide();
         $('#div_upload').show();
       }
 
-      else if($('#input_upload_type :selected').text() == 'Text')
+      else if($('#input_upload_type :selected').text() == 'News/Updates')
       {
         $('#invalid_upload_type').hide();
         $('#div_upload').hide();
@@ -101,7 +101,6 @@ function validate_upload() {
               else
               {
                   var valid_extensions = ['pdf','jpg','jpeg','gif']; //array of valid extensions
-                   //var file_name = $('#upload_file').val().split('\\').pop();
                    var file_Ext = $('#upload_file').val().split('.').pop();
                    if(valid_extensions.indexOf(file_Ext) > -1)
                    {

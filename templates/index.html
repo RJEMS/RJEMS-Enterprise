@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Welcome to RJEMS Enterprise</title>
+
+  </head>
+  <body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">RJEMS Enterprise</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/" title="Home">Home</a>
+
+        {% if not g.user %}
+          <a class="p-2 text-dark" href="/login">Log In / Register</a>
+        {% else %}
+          <a class="p-2 text-dark" href="/logout">Logout</a>
+        {% endif %}
+
+      </nav>
+    </div>
+    <div class="container">
+        {% block body %}
+          <h1 class="text-center">RJEMS Enterprise</h1>
+          <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+              <div class="jumbotron">
+                Welcome to RJEMS Enterprise. As an employee of RJEMS Enterprise, you will be able to
+                  easily register for this portal, log in, and explore the wonderful content
+                  that our company has to offer. You can also share any insights you would like to add to the
+                  company by creating posts and uploading photos. Furhermore, you will also be able to view your
+                  personal employee information through this portal.
+                  <br>
+                    <p></p>
+                    For further questions, please reach out to our admin Rajshree Chauhan.
+                  </br>
+              </div>
+            </div>
+          </div>
+        {% endblock %}
+    </div>
+    <footer class="text-center">Created by Emmeline Tsen, Rajshree Chauhan, Sindhuja Ramini, Jonathan Gee, Matt DiPietro. </footer>
+  </body>
+</html>
+

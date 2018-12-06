@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">    <title>RJEMS Enterprise | {% block title %}{% endblock %}</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="/static/js/jquery-3.3.1.min.js" type="text/javascript"></script>-->
+    <script src="/static/js/underscore.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="/static/js/index.js">
+    </script>
+
+</head>
+<body>
+<div class="header">
+    <h2 class="my-0 mr-md-auto font-weight-normal">RJEMS Enterprise</h2>
+    <nav class="my-2 my-md-0 mr-md-3">
+        {% if not g.user %}
+        <a class="p-2 text-dark" href="/login">Log In / Register</a>
+        {% else %}
+        <a class="p-2 text-dark" href="/logout">Logout</a>
+        {% endif %}
+    </nav>
+</div>
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="header" >
+        <li><span class="glyphicon glyphicon-user"></span><a href="/profile">Profile</a></li>
+        <li><span class="glyphicon glyphicon-dashboard"></span><a href="/dashboard">Dashboard</a></li>
+        <li><span class="glyphicon glyphicon-search"></span><a href="/search">Search</a></li>
+        {% if session['role_name'] == 'admin'%}
+            <li><span class="glyphicon glyphicon-upload"></span><a href="/upload">Upload</a></li>
+        {% endif %}
+    </ul>
+
+
+    <div className="content">
+
+    </div>
+
+
+
+</div>
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+
+</body>
+</html>

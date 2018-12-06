@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block body %}
+<form id="search" method=post>
+    <p class="success" style="display:none" id="input_update_message">Role was updated successfully.</p>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <!--<label for="inputFirstName">First Name</label>-->
+            <input type="text" class="form-control" id="input_first_name" name="input_first_name" placeholder="First Name">
+        </div>
+        <div class="form-group col-md-5">
+            <!--<label for="inputLastName4">Last Name</label>-->
+            <input type="text" class="form-control" id="input_last_name" name="input_last_name" placeholder="Last Name">
+        </div>
+        <div class="form-group col-md-2">
+            <button type="submit" class="btn btn-info btn-lg" ><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover" >
+        <thead class="table-header">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Role</th>
+            {% if session['role_name'] == 'admin'%}
+                <th scope="col"></th>
+            {% endif %}
+            {% if session['role_name'] == 'admin' or session['role_name'] == 'manager' %}
+                <th scope="col"></th>
+            {% endif %}
+        </tr>
+        </thead>
+        {% for item in users %}
+            <TR>
+                <TD class="c1">{{item.id}}</TD>
+                <TD class="c2">{{item.first_name}}</TD>
+                <TD class="c3">{{item.last_name}}</TD>
+                <TD class="c4"><SPAN>{{item.email}}</SPAN></TD>
+                <TD class="c5"><SPAN>{{item.phone}}</SPAN></TD>
+                <TD class="c5"><SPAN>{{item.role_name}}</SPAN></TD>
+                {% if session['role_name'] == 'admin'%}
+                    <TD align="center">
+                        {% if item.role_name =="manager" or item.role_name =="admin"%}
+                            <a class="btn btn-info" name="assign_manager_role" onclick="assign_manager_role(this)" disabled>Assign Manager Role</a>
+                        {% else %}
+                            <a class="btn btn-info" name="assign_manager_role" onclick="assign_manager_role(this)">Assign Manager Role</a>{%endif%}
+                    </TD>
+                {% endif %}
+
+                {% if session['role_name'] == 'admin' or session['role_name'] == 'manager' %}
+                    <TD align="center"> <a class="btn btn-info" data-toggle="modal" data-target="#myOutput{{ item.id }}">View Payslip</a></TD>
+                {% endif %}
+            </TR>
+        {% endfor %}
+    </table>
+
+    {% for item in users %}
+    <!-- Modal -->
+    <div class="modal fade" id="myOutput{{ item.id }}" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Payslip</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="left-text">
+                        Employee ID : {{ item.id }}
+                        <span class="right-text">Name : {{ item.first_name }} {{ item.last_name }}</span>
+                    </p>
+                    <p>Address : {{ item.address_line1 }}, {{ item.address_line2 }},{{ item.city }}, {{ item.state }}</p>
+                    <p class="left-text">Email : {{item.email}}<span class="right-text">Phone : {{item.phone}}</span></p>
+                    <p>Company : RJEMS</p>
+                    <p>***************************************************************************************************************************</p>
+
+                    <p><b>Basic Salary : {{item.basic_salary}}</b></p>
+                    <p><b>Deductions </b></p>
+                    <p class="indent">Taxation : ${{item.basic_salary * 40/100}}</p>
+                    <p class="indent">Insurance : $150</p>
+                    <p class="indent">Others : $120</p>
+
+                    <p>***************************************************************************************************************************</p>
+
+                    <p class="left-text"><b>
+                        Gross Earnings : ${{ item.basic_salary }}
+                        {% set deductions = item.basic_salary * 40/100 + 150 + 120 %}
+                        <span class="right-text">Total Deductions : ${{deductions}} </span></b>
+                    </p>
+                    <p><b>Net Salary Transferred :  ${{item.basic_salary - deductions}}</b></p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</form>
+{% endblock %}
+
+
+

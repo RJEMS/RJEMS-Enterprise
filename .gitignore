@@ -1,0 +1,17 @@
+# npm stuff
+npm-debug.log
+*node_modules
+*static/dist
+
+# idea junk
+*.iml
+.idea
+
+
+
+# flask stuff
+__pycache__
+
+# client secret
+client_secrets.json
+

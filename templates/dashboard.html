@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+
+
+
+<button class="collapsible">Training Documents</button>
+    <div class="content">
+        <table class="table">
+            <tbody>
+                {% for item in uploads %}
+                    {% if item.upload_type == "pdf" %}
+                        <h3><a target="_blank" href="{{ item.url }}"> {{ item.title }}</a></h3><br/>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+<br/>
+<br/>
+
+<button class="collapsible">Photos</button>
+    <div class="content">
+        <br/>
+        {% set count = 1 %}
+        {% for item in uploads %}
+            {% if item.upload_type == "jpg" or item.upload_type == "jpeg" or item.upload_type =="gif" %}
+                <img src={{ item.url }} alt={{ item.title }} width="200px" height= "200px" class="img-thumbnail" id= {{ count }} >
+            {% endif %}
+        {% set count = count + 1 %}
+        {% endfor %}
+
+        <div id="myModal" class="modal">
+            <span class="close">×</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
+    </div>
+<br/>
+<br/>
+
+<button class="collapsible">News/Updates</button>
+    <div class="content">
+        <table class="table">
+            <tbody>
+
+                {% for item in uploads %}
+                    {% if item.upload_type == "text" %}
+                        <tr><td > <h3>{{ item.text }}</h3></td></tr>
+                    {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+
+
+
+
+

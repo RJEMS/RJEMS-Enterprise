@@ -9,22 +9,24 @@
 
   </head>
   <body>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 class="my-0 mr-md-auto font-weight-normal">RJEMS Enterprise</h5>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/" title="Home">Home</a>
+    <div class="headerIndex" >
+      <h3  >RJEMS Enterprise
+
 
         {% if not g.user %}
-          <a class="p-2 text-dark" href="/login">Log In / Register</a>
+        <span class="right-text">  <a class="p-2 text-dark" href="/login">Log In / Register</a></span>
         {% else %}
-          <a class="p-2 text-dark" href="/logout">Logout</a>
+        <span class="right-text">  <a class="p-2 text-dark" href="/logout">Logout</a></span>
         {% endif %}
 
-      </nav>
+
+      </h3>
+
     </div>
+    <br/>
     <div class="container">
         {% block body %}
-          <h1 class="text-center">RJEMS Enterprise</h1>
+
           <div class="row">
             <div class="col-sm-6 offset-sm-3">
               <div class="jumbotron">

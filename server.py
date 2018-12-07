@@ -10,7 +10,6 @@ from models.models import *
 from commands import *
 from utils import *
 
-
 migrate = Migrate(app, db)
 
 
@@ -128,4 +127,4 @@ def assign_manager_role():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, ssl_context=('cert.pem', 'key.pem'))

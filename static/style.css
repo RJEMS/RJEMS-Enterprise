@@ -228,3 +228,11 @@ a{
   .right-text {
   float:right;
   }
+
+  .headerIndex{
+  background-color:#185a66;
+  height:70px ;
+  padding-top:15px;
+  padding-left:20px;
+  padding-right:20px
+   }

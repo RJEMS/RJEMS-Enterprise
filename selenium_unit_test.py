@@ -194,7 +194,6 @@ class Test_RJEMS(unittest.TestCase):
 		news.click()
 
 		update = self.driver2.find_element_by_xpath("//html/body/div[3]/div[3]/table/tbody/tr[1]/td/h3")
-		print(update.text)
 		assert "Unit test update" in update.text
 		self.assertEqual("Unit test update", update.text)
 
